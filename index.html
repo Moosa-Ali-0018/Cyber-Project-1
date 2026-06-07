@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity HTML Lab</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 40px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+        h1 { color: #38bdf8; border-bottom: 2px solid #334155; padding-bottom: 10px; }
+        h2 { color: #fbbf24; margin-top: 30px; }
+        .card {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+        th { background-color: #334155; color: #38bdf8; }
+        .btn {
+            display: inline-block;
+            background-color: #38bdf8;
+            color: #0f172a;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .btn:hover { background-color: #7dd3fc; }
+        code {
+            background-color: #0f172a;
+            color: #f43f5e;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Lab: Web Form Vulnerability & Phishing Analysis</h1>
+    <p>As a cybersecurity student, understanding how malicious actors replicate front-end code is vital for defensive engineering. This lab explores a mock phishing asset and analyzes HTML-level vulnerabilities.</p>
+
+    <div class="card">
+        <h2>Target Asset</h2>
+        <p>We have deployed a simulated, isolated banking login page to analyze how form data is handled.</p>
+        <a href="login.html" target="_blank" class="btn">Launch Simulated Login Page ↗</a>
+    </div>
+
+    <h2>Vulnerability Audit Notebook</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>HTML Element / Attribute</th>
+                <th>Security Risk Context</th>
+                <th>Defensive Remediation (Fix)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>form action="http://..."</code></td>
+                <td>Data sent over unencrypted HTTP can be intercepted via MitM (Man-in-the-Middle) packet sniffing.</td>
+                <td>Always enforce <code>https://</code> and utilize HSTS headers.</td>
+            </tr>
+            <tr>
+                <td><code>input type="password"</code></td>
+                <td>Masks input on screen, but leaves data unencrypted in transit if SSL/TLS is missing.</td>
+                <td>Ensure end-to-end encryption and look for DOM-based data leaks.</td>
+            </tr>
+            <tr>
+                <td><code>autocomplete="on"</code></td>
+                <td>If left enabled on sensitive forms, browsers cached credentials locally, increasing local theft risks.</td>
+                <td>Explicitly set <code>autocomplete="off"</code> for banking or high-security inputs.</td>
+            </tr>
+            <tr>
+                <td>Missing <code>Content-Security-Policy</code></td>
+                <td>Allows unauthorized scripts to inject directly into the HTML structure (Cross-Site Scripting).</td>
+                <td>Implement strict HTTP CSP headers to restrict unauthorized script sources.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="card" style="margin-top: 30px; border-left: 4px solid #fbbf24;">
+        <h3>📌 Analyst Note</h3>
+        <p>Phishing sites rely entirely on cloning the HTML/CSS structure of legitimate businesses. Defense includes checking domain registration age, SSL certificate transparency logs, and checking source HTML files for irregular external script targets.</p>
+    </div>
+</div>
+
+</body>
+</html>
